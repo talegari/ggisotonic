@@ -13,4 +13,5 @@ Imports:
     ggplot2,
     dplyr,
     fdrtool
- 
+URL: https://github.com/talegari/ggisotonic
+BugReports: https://github.com/talegari/ggisotonic/issues

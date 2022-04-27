@@ -1,9 +1,9 @@
 Package: ggisotonic
 Type: Package
-Title: Add isotonic or monotonic regression curves to ggplots
-Version: 0.1.0
+Title: Ggplot2 Friendly Isotonic or Monotonic Regression Curves
+Version: 0.1.1
 Authors@R: person("Komala Sheshachala", "Srikanth", email = "sri.teach@gmail.com", role = c("aut", "cre"))
-Description: Provides geom_isotonic to add weighted isotonic regression curves.
+Description: Provides stat_isotonic to add weighted univariate isotonic regression curves.
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -12,6 +12,7 @@ Imports:
     magrittr,
     ggplot2,
     dplyr,
-    fdrtool
+    fdrtool,
+    tidyr,
 URL: https://github.com/talegari/ggisotonic
 BugReports: https://github.com/talegari/ggisotonic/issues

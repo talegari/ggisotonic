@@ -12,6 +12,7 @@ stat_isotonic(
   show.legend = NA,
   inherit.aes = TRUE,
   precision = 4,
+  increasing = TRUE,
   ...
 )
 }
@@ -54,6 +55,8 @@ the default plot specification, e.g. \code{\link[ggplot2:borders]{borders()}}.}
 
 \item{precision}{Round 'x' with some precision to remove duplicates values}
 
+\item{increasing}{(bool) Whether y increases with x (isotonic)}
+
 \item{...}{Other arguments passed on to \code{\link[ggplot2:layer]{layer()}}. These are
 often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
@@ -65,20 +68,21 @@ Adds a stat with isotonic or monotonic regression based on
 }
 \examples{
 library("ggplot2")
+set.seed(100)
 dataset = data.frame(x = sort(runif(1e2)),
-                     y = c(rnorm(1e2/2), rnorm(1e2/2, mean = 4)),
-                     w = sample(1:3, 1e2, replace = TRUE)
-                     )
+                  y = c(rnorm(1e2/2), rnorm(1e2/2, mean = 4)),
+                  w = sample(1:3, 1e2, replace = TRUE)
+                  )
 
-# plot unweighted isotonic regression line
+# plot isotonic regression line
 ggplot(dataset, aes(x = x, y = y)) +
-    geom_point() +
-    stat_isotonic(aes(w = 1))
+ geom_point() +
+ stat_isotonic()
 
-# plot weighted isotonic regression line
+# plot weighted isotonic regression line along with facets
 ggplot(dataset, aes(x = x, y = y)) +
-    geom_point() +
-    stat_isotonic(aes(w = w, color = 'red'), show.legend = FALSE) +
-    facet_wrap(w ~ .)
+ geom_point() +
+ stat_isotonic(aes(w = w), color = 'red', size = 1.5, show.legend = FALSE) +
+ facet_wrap(w ~ .)
 
 }

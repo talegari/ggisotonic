@@ -62,6 +62,9 @@ often aesthetics, used to set an aesthetic to a fixed value, like
 \code{colour = "red"} or \code{size = 3}. They may also be parameters
 to the paired geom/stat.}
 }
+\value{
+Returns a object of class 'gg', 'ggplot'
+}
 \description{
 Adds a stat with isotonic or monotonic regression based on
   `fdrtool::monoreg` with optional weights

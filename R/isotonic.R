@@ -1,4 +1,5 @@
-#' @importFrom magrittr %>%
+#' @importFrom dplyr `%>%`
+#' @importFrom fdrtool monoreg
 
 StatMonotonic = ggplot2::ggproto(
     "StatMonotonic",
@@ -26,15 +27,15 @@ StatMonotonic = ggplot2::ggproto(
         }
 
         # aggregate one row per given 'x'
-        df = df %>%
-            na.omit() %>%
-            dplyr::mutate(x = round(x, precision)) %>%
-            dplyr::group_by(x) %>%
-            dplyr::summarise(y = weighted.mean(y, w),
-                             w = mean(w)
-                             ) %>%
-            dplyr::ungroup() %>%
-            dplyr::arrange(x)
+        df = na.omit(df)
+        df = dplyr::mutate(df, x = round(x, precision))
+        df = dplyr::group_by(df, x)
+        df = dplyr::summarise(df,
+                              y = weighted.mean(y, w),
+                              w = mean(w)
+                              )
+        df = dplyr::ungroup(df)
+        df = dplyr::arrange(df, x)
 
         # fit isotonic regression
         res_monoreg = fdrtool::monoreg(x = df$x,
@@ -51,12 +52,14 @@ StatMonotonic = ggplot2::ggproto(
 
 #' @export
 #' @name stat_isotonic
+#' @aliases stat_isotonic
 #' @title stat from isotonic regression
 #' @description Adds a stat with isotonic or monotonic regression based on
 #'   `fdrtool::monoreg` with optional weights
 #' @inheritParams ggplot2::stat_identity
 #' @param precision Round 'x' with some precision to remove duplicates values
 #' @param increasing (bool) Whether y increases with x (isotonic)
+#' @return Returns a object of class 'gg', 'ggplot'
 #' @examples
 #' library("ggplot2")
 #' set.seed(100)
@@ -116,7 +119,7 @@ stat_isotonic = function(mapping = NULL,
                                  type = type,
                                  ...
                                  )
-    )
+                  )
 }
 
 stat_monotonic = stat_isotonic
